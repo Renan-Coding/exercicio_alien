@@ -34,6 +34,7 @@ var moeda; // Variável do sprite da moeda.
 var pontuacao = -1; // Variável da pontuação do jogador.
 var placar; // Variável do texto do placar.
 var nave;
+var bases = [plataforma, nave];
 
 function preload() {
   this.load.image("bg", "assets/bg.png"); // Carrega o plano de fundo.
@@ -55,21 +56,25 @@ function create() {
   alien.setCollideWorldBounds(true); // Define que o alien colide com os limites da tela.
   teclado = this.input.keyboard.createCursorKeys(); // Cria as teclas do teclado.
 
-  plataforma = this.physics.add.staticImage(
-    larguraJogo / 2,
-    alturaJogo / 2,
+  bases.push(this.physics.add.staticImage(
+    larguraJogo / 3,
+    alturaJogo / 1.5,
     "plataforma"
-  ); // Adiciona a plataforma como um objeto estático.
-  nave = this.physics.add.staticImage(600, 200, "nave"); // Adiciona a nave como um objeto estático.
+  )); // Adiciona a plataforma como um objeto estático.
+  bases.push(this.physics.add.staticImage(550, 250, "nave")); // Adiciona a nave como um objeto estático.
 
-  this.physics.add.collider(alien, plataforma); // Adiciona a colisão entre o alien e a plataforma.
-  this.physics.add.collider(alien, nave); // Adiciona a colisão entre o alien e a nave.
+  bases.forEach(bases => {
+    this.physics.add.collider(alien, bases);
+  }); 
 
   moeda = this.physics.add.sprite(larguraJogo / 2, 0, "moeda"); // Adiciona o sprite da moeda.
   moeda.setCollideWorldBounds(true); // Define que a moeda colide com os limites da tela.
   moeda.setBounce(0.7); // Define o quique da moeda.
-  this.physics.add.collider(moeda, plataforma); // Adiciona uma colisão entre a moeda e a plataforma.
-
+  
+  bases.forEach(bases => {
+    this.physics.add.collider(moeda, bases);
+  });
+  
   placar = this.add.text(50, 100, "Moedas:" + pontuacao, {
     fontSize: "45px",
     fill: "#495613",
