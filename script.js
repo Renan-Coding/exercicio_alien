@@ -36,6 +36,16 @@ var placar; // Variável do texto do placar.
 var nave;
 var bases = [plataforma, nave];
 
+var translations = {
+  'pt': {
+    Coins: "Moedas:",
+  },
+  'en': {
+    Coins: "Coins:",
+  },
+};
+var currentLanguage = 'pt';
+
 function preload() {
   this.load.image("bg", "assets/bg.png"); // Carrega o plano de fundo.
   this.load.image("player", "assets/alienigena.png"); // Carrega o personagem do alien.
@@ -56,25 +66,27 @@ function create() {
   alien.setCollideWorldBounds(true); // Define que o alien colide com os limites da tela.
   teclado = this.input.keyboard.createCursorKeys(); // Cria as teclas do teclado.
 
-  bases.push(this.physics.add.staticImage(
-    larguraJogo / 3,
-    alturaJogo / 1.5,
-    "plataforma"
-  )); // Adiciona a plataforma como um objeto estático.
+  bases.push(
+    this.physics.add.staticImage(
+      larguraJogo / 3,
+      alturaJogo / 1.5,
+      "plataforma"
+    )
+  ); // Adiciona a plataforma como um objeto estático.
   bases.push(this.physics.add.staticImage(550, 250, "nave")); // Adiciona a nave como um objeto estático.
 
-  bases.forEach(bases => {
+  bases.forEach((bases) => {
     this.physics.add.collider(alien, bases);
-  }); 
+  });
 
   moeda = this.physics.add.sprite(larguraJogo / 2, 0, "moeda"); // Adiciona o sprite da moeda.
   moeda.setCollideWorldBounds(true); // Define que a moeda colide com os limites da tela.
   moeda.setBounce(0.7); // Define o quique da moeda.
-  
-  bases.forEach(bases => {
+
+  bases.forEach((bases) => {
     this.physics.add.collider(moeda, bases);
   });
-  
+
   placar = this.add.text(50, 100, "Moedas:" + pontuacao, {
     fontSize: "45px",
     fill: "#495613",
@@ -90,6 +102,27 @@ function create() {
     placar.setText("Moedas:" + pontuacao); // Atualiza o texto do placar com a nova pontuação.
 
     moeda.setVisible(true); // Torna a moeda visível novamente.
+  });
+
+  var btnPortugues = this.add.text(100, 50, "Português", {
+    fontSize: "24px",
+    fill: "#fff",
+  });
+  var btnIngles = this.add.text(300, 50, "English", {
+    fontSize: "24px",
+    fill: "#fff",
+  });
+
+  btnPortugues.setInteractive();
+  btnPortugues.on("pointerdown", function () {
+    currentLanguage = 'pt';
+    updateTexts();
+  });
+
+  btnIngles.setInteractive();
+  btnIngles.on("pointerdown", function () {
+    currentLanguage = 'en';
+    updateTexts();
   });
 }
 
@@ -118,4 +151,12 @@ function ativarTurbo() {
 
 function semTurbo() {
   turbo.setVisible(false); // Torna o turbo invisível.
+}
+
+function updateTexts() {
+  placar.setText(translate("Coins") + pontuacao);
+}
+
+function translate(key) {
+  return translations[currentLanguage][key] || "Translation not found";
 }
