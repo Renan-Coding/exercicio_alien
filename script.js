@@ -36,15 +36,15 @@ var placar; // Variável do texto do placar.
 var nave;
 var bases = [plataforma, nave];
 
-var translations = {
-  pt: {
-    Coins: "Moedas:",
-  },
-  en: {
-    Coins: "Coins:",
-  },
-};
-var currentLanguage = "pt";
+// var translations = {
+//   pt: {
+//     Coins: "Moedas:",
+//   },
+//   en: {
+//     Coins: "Coins:",
+//   },
+// };
+// var currentLanguage = "pt";
 
 function preload() {
   this.load.image("bg", "assets/bg.png"); // Carrega o plano de fundo.
@@ -104,28 +104,28 @@ function create() {
     moeda.setVisible(true); // Torna a moeda visível novamente.
   });
 
-  var btnPortugues = this.add.text(200, 50, "Português", {
-    fontSize: "24px",
-    fontFamily: "Arial",
-    fill: "#000",
-  });
-  var btnIngles = this.add.text(500, 50, "English", {
-    fontSize: "24px",
-    fontFamily: "Arial",
-    fill: "#000",
-  });
+  // var btnPortugues = this.add.text(200, 50, "Português", {
+  //   fontSize: "24px",
+  //   fontFamily: "Arial",
+  //   fill: "#000",
+  // });
+  // var btnIngles = this.add.text(500, 50, "English", {
+  //   fontSize: "24px",
+  //   fontFamily: "Arial",
+  //   fill: "#000",
+  // });
 
-  btnPortugues.setInteractive();
-  btnPortugues.on("pointerdown", function () {
-    currentLanguage = "pt";
-    updateTexts();
-  });
+  // btnPortugues.setInteractive();
+  // btnPortugues.on("pointerdown", function () {
+  //   currentLanguage = "pt";
+  //   updateTexts();
+  // });
 
-  btnIngles.setInteractive();
-  btnIngles.on("pointerdown", function () {
-    currentLanguage = "en";
-    updateTexts();
-  });
+  // btnIngles.setInteractive();
+  // btnIngles.on("pointerdown", function () {
+  //   currentLanguage = "en";
+  //   updateTexts();
+  // });
 }
 
 function update() {
@@ -155,10 +155,10 @@ function semTurbo() {
   turbo.setVisible(false); // Torna o turbo invisível.
 }
 
-function updateTexts() {
-  placar.setText(translate("Coins") + pontuacao);
-}
+// function updateTexts() {
+//   placar.setText(translate("Coins") + pontuacao);
+// }
 
-function translate(key) {
-  return translations[currentLanguage][key] || "Translation not found";
-}
+// function translate(key) {
+//   return translations[currentLanguage][key] || "Translation not found";
+// }
